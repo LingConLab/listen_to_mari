@@ -18,17 +18,6 @@ df %>%
   sample_n(nrow(.)) %>% 
   write_csv("result.csv")
 
-df <- read_csv("result.csv")
-dir.create("audio")
-map(seq_along(df$audio), .progress = TRUE,
-    function(i){
-  curl::curl_download(df$audio[i], str_c("audio/", df$id[i], ".wav"))  
-})
-
-df %>% 
-  mutate(audio = str_c("audio/", id, ".wav")) %>% 
-  write_csv("result.csv")
-
 df %>% 
   select(id, sentence) %>% 
   mutate(preposition = "") %>% 
